@@ -1,0 +1,66 @@
+@using TravelBooking.Data.ViewModels;
+@model LoginVM;
+
+@if (TempData["loginflash"] != null)
+{
+    <div id="loginflash" class="flash alert alert-success">
+        @TempData["loginflash"]
+    </div>
+}
+
+@if (TempData["loginFailed"] != null)
+{
+    <div id="loginflash" class="flash alert alert-success">
+        @TempData["loginFailed"]
+    </div>
+}
+@{
+    ViewData["Title"] = "Log in to your account";
+}
+
+<div class="row">
+    <div class="col-md-6 offset-3">
+        <p>
+        <h4>Log in to your account</h4>
+        </p>
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="col-md-12 alert alert-danger">
+                <span><b>Sorry!</b> - @TempData["Error"] </span>
+            </div>
+        }
+
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Login">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label mb-3"></label>
+                        <input asp-for="Email" class="form-control mb-3" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password" class="control-label mb-3"></label>
+                        <input asp-for="Password" class="form-control mb-4" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input class="btn btn-outline-success float-right" type="submit" value="Log in" />
+                        <a class="btn btn-outline-secondary" asp-controller="Home" asp-action="Index">Cancel</a>
+                        <a asp-controller="GoogleLogin" asp-action="Login">
+                            <img src="https://developers.google.com/identity/images/btn_google_signin_dark_normal_web.png"
+                                alt="Google Sign-In" />
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("loginflash").style.display = "none";
+    }, 3000);
+</script>

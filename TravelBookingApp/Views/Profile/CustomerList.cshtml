@@ -1,0 +1,59 @@
+@using TravelBooking.Data.ViewModels;
+@using Microsoft.AspNetCore.Identity
+@model IEnumerable<IdentityUser>
+
+@{
+    ViewData["Title"] = "List of Customers";
+}
+
+<div class="container">
+    <h2 class="text-center">Customer List</h2>
+    <!-- Search Bar -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-8">
+            <form class="form-inline my-2 my-lg-0" method="Get" asp-controller="Profile" asp-action="CustomerList">
+                <div class="input-group">
+                    <input type="search" name="SearchString" class="form-control rounded"
+                        placeholder="Search by username or email..." />
+                    <button type="submit" asp-controller="Profile" class="btn btn-outline-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <!-- Customer List -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-8">
+            @if (TempData["notfound"] != null)
+            {
+                <div id="notfound" class="flash alert alert-danger">
+                    @TempData["notfound"]
+                </div>
+            }
+            <div class="card text-black bg-light">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone Number</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var customer in Model)
+                            {
+                                <tr>
+                                    <td class="notranslate">@customer.UserName</td>
+                                    <td class="notranslate">@customer.Email</td>
+                                    <td class="notranslate">@customer.PhoneNumber</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

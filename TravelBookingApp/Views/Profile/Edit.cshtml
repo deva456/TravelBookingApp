@@ -1,0 +1,44 @@
+@using TravelBooking.Data.ViewModels;
+@model IdentityVM
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <h2 class="text-center mb-4">Edit Profile</h2>
+        <div class="container card border-success" style="max-width: 35rem; height:26rem; padding-top:20px">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8 offset-2">
+                        <form method="post" asp-action="Edit">
+                            @* <div asp-validation-summary="All" class="text-danger"></div> *@
+                            <div class="form-group">
+                                <label asp-for="@Model.UserName" class="control-label"></label>
+                                <input asp-for="@Model.UserName" class="form-control" />
+                                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label asp-for="@Model.Email" class="control-label"></label>
+                                <input asp-for="@Model.Email" class="form-control" readonly />
+                                <span asp-validation-for="@Model.Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group mt-3">
+                                <label asp-for="@Model.PhoneNumber" class="control-label"></label>
+                                <input asp-for="@Model.PhoneNumber" class="form-control" />
+                                <span asp-validation-for="@Model.PhoneNumber" class="text-danger"></span>
+                            </div>
+                            <div class="form-group d-flex justify-content-between mt-5">
+                                <input class="btn btn-success float-right" style="width:50%; margin-right:5px;" asp-controller="Profile"
+                                    asp-route-id="@Model.Id" type="submit" value="Confirm" />
+                                <a class="btn btn-secondary" style="width:50%;" asp-controller="Profile"
+                                    asp-action="Index">Cancel</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

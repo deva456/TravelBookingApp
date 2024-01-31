@@ -1,0 +1,67 @@
+@using TravelBooking.Data.ViewModels
+@model List<PurchasedFlight>
+
+@{
+    ViewData["Title"] = "Customer Purchase List";
+}
+
+<div class="container">
+    <h2 class="text-center">Customer Purchase List</h2>
+    <br>
+    <!-- Search Bar -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-8">
+            <form class="form-inline my-2 my-lg-0" method="Get" asp-controller="PurchasedFlight"
+                asp-action="AdminIndex">
+                <div class="input-group">
+                    <input type="search" name="SearchString" class="form-control rounded"
+                        placeholder="Search Purchase..." />
+                    <button type="submit" asp-controller="PurchasedFlight"
+                        class="btn btn-outline-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <div class="col-12">
+        @if (TempData["notfound"] != null)
+        {
+            <div class="flash alert alert-danger">
+                @TempData["notfound"]
+            </div>
+        }
+        <div class="card text-black bg-light" style="margin-bottom:50px;">
+            <div class="card-body">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Username</th>
+                            <th scope="col">Number</th>
+                            <th scope="col">Airline</th>
+                            <th scope="col">Origin</th>
+                            <th scope="col">Destination</th>
+                            <th scope="col">Purchase Date</th>
+                            <th scope="col">Departure Date</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var purchasedFlight in Model)
+                        {
+                            <tr>
+                                <td class="notranslate">@purchasedFlight.Purchase.User.UserName</td>
+                                <td class="notranslate">@purchasedFlight.Flight.Number</td>
+                                <td>@purchasedFlight.Flight.Airline.AirlineName</td>
+                                <td>@purchasedFlight.Flight.Origin.Name </td>
+                                <td>@purchasedFlight.Flight.Destination.Name </td>
+                                <td>@purchasedFlight.Purchase.WhenPaid.ToString("yyyy-MM-dd")</td>
+                                <td>@purchasedFlight.DepartureDate.ToString("yyyy-MM-dd")</td>
+                                <td>$ @purchasedFlight.Price</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

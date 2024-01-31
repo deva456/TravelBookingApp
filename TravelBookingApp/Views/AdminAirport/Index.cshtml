@@ -1,0 +1,86 @@
+@model List<Airport>
+@{
+    ViewData["Title"] = "List of Airports";
+}
+
+<div class="container">
+    <h2 class="text-center">List of Airports</h2>
+    <br>
+    <!-- Search Bar -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-8">
+            <form class="form-inline my-2 my-lg-0" method="post" asp-controller="AdminAirport" asp-action="Index">
+                <div class="input-group">
+                    <input type="search" name="searchWord" class="form-control rounded" placeholder="Search..." />
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <!-- Airports List -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-8">
+            <a class="btn btn-primary" style="margin-bottom: 10px;" asp-controller="AdminAirport"
+                asp-action="Create">Add an airport</a>
+            @if (TempData["AirportOption"] != null)
+            {
+                <div id="AirportOption" class="flash alert alert-warning">
+                    @TempData["AirportOption"]
+                </div>
+            }
+            <div class="card text-black bg-light">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-3">Id</th>
+                                <th class="col-3">Code</th>
+                                <th class="col-3">City</th>
+                                <th class="col-3 text-center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var airport in Model)
+                            {
+                                <tr>
+                                    <td class="notranslate">@airport.Id</td>
+                                    <td class="notranslate">@airport.Code</td>
+                                    <td>@airport.Name</td>
+                                    <th class="d-flex justify-content-center">
+                                        <a class="btn btn-sm btn-success" style="margin-right:4px;"
+                                        asp-controller="AdminAirport" asp-action="Details"
+                                        asp-route-id="@airport.Id">Detail</a>
+                                        <a class="btn btn-sm btn-info" style="margin-right:4px;"
+                                        asp-controller="AdminAirport" asp-action="Edit"
+                                        asp-route-id="@airport.Id">Edit</a>
+                                        <a class="btn btn-sm btn-danger" asp-controller="AdminAirport" asp-action="Delete"
+                                        asp-route-id="@airport.Id">Delete</a>
+                                    </th>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("AirportOption").style.display = "none";
+    }, 3000);
+</script>
+
+
+
+
+
+
+
+
+
+
+
+

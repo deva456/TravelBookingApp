@@ -1,0 +1,86 @@
+@using TravelBooking.Data.ViewModels
+@model NewFlightVM
+@{
+    ViewData["Title"] = "Add a flight";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        @if (TempData["FlightCreateOption"] != null)
+        {
+            <div id="FlightCreateOption" class="flash alert alert-warning">
+                @TempData["FlightCreateOption"]
+            </div>
+        }
+        <h2>Add Flight</h2>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form asp-action="Create" method="post">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Number">Number</label>
+                        <input asp-for="Number" class="form-control form-control-sm" />
+                        <span asp-validation-for="Number" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Airline">Airline</label>
+                        <select asp-for="Airline" class="form-control form-control-sm">
+                            @foreach (Airline a in Model.AirlineList)
+                            {
+                                <option value=@a.Id>@a.AirlineName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Number" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DepartureTime">Departure Time</label>
+                        <input asp-for="DepartureTime" class="form-control form-control-sm" />
+                        <span asp-validation-for="DepartureTime" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Origin">Origin</label>
+                        <select asp-for="Origin" class="form-control form-control-sm">
+                            @foreach (Airport a in Model.AirportList)
+                            {
+                                <option value=@a.Id>@a.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Origin" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Destination">Destination</label>
+                        <select asp-for="Destination" class="form-control form-control-sm">
+                            @foreach (Airport a in Model.AirportList)
+                            {
+                                <option value=@a.Id>@a.Name</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Destination" class="text-danger"></span>
+                        <span class="text-danger"> @TempData["sameError"]</span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="FlightDurationMinutes">Flight Duration</label>
+                        <input asp-for="FlightDurationMinutes" class="form-control form-control-sm" />
+                        <span asp-validation-for="FlightDurationMinutes" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price">Price</label>
+                        <input asp-for="Price" class="form-control form-control-sm" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create</button>
+                        <a class="btn btn-secondary" asp-controller="AdminFlight" asp-action="Index">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("FlightCreateOption").style.display = "none";
+    }, 3000);
+</script>

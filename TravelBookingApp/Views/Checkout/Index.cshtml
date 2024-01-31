@@ -1,0 +1,45 @@
+﻿@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+@inject IOptions<TravelBooking.Helper.StripeSettings> Stripe
+@{
+    ViewData["Title"] = "Checkout";
+}
+
+
+@* @{
+    Layout = "_Layout";
+}
+
+ *@
+
+@* <div class="text-center">
+    <form asp-action="Processing" asp-controller="Checkout" method="post">
+        <article>
+            <label>Amount CAD$ : @ViewBag.DollarAmount</label>
+
+        </article>
+        <script src="//checkout.stripe.com/v2/checkout.js"
+                class="stripe-button"
+                data-key="@Stripe.Value.Publishablekey"
+                data-amount="@ViewBag.Total"
+                data-name="[Deveducate]"
+                data-locale="en"
+                data-discription="Sample charge"
+                data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                data-zip-code="true">
+        </script>
+    </form>
+</div> *@
+<div class="text-center">
+@using (Html.BeginForm("CreateCheckoutSession", "Checkout", FormMethod.Post))
+{
+   
+            @* <label>@ViewBag.DollarAmount</label><br /> *@
+          
+     <label>Amount CAD$</label>
+   <input type="text" id="TextBox1"  name="total" value="@ViewBag.Total" disabled/><br />
+   <br>
+    <button type="submit" class="btn btn-sm btn-primary">Pay With Card</button>
+}
+</div>

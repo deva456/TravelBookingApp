@@ -1,0 +1,58 @@
+@model Flight
+@{
+    ViewData["Title"] = "Delete a flight";
+}
+
+
+<div class="container">
+    @if (TempData["FlightDeleteOption"] != null)
+    {
+        <div id="FlightDeleteOption" class="flash alert alert-warning">
+            @TempData["FlightDeleteOption"]
+        </div>
+    }
+    <div class="flash alert alert-success">
+        <p>Are you sure you want to delete flight @Model.Id ?</p>
+        <form method="post">
+            <button class="btn btn-danger" asp-controller="AdminFlight" asp-route-id="@Model.Id">Delete</button>
+            <a class="btn btn-primary" asp-controller="AdminFlight" asp-action="Index">Cancel</a>
+        </form>
+    </div>
+
+    <div>
+        <dl>
+            <dt>AirLine</dt>
+            <dd>@Model.Airline.AirlineName</dd>
+        </dl>
+        <dl>
+            <dt>Number</dt>
+            <dd class="notranslate">@Model.Number</dd>
+        </dl>
+        <dl>
+            <dt>Origin</dt>
+            <dd>@Model.Origin.Name</dd>
+        </dl>
+        <dl>
+            <dt>Destination</dt>
+            <dd>@Model.Destination.Name</dd>
+        </dl>
+        <dl>
+            <dt>DepartureTime</dt>
+            <dd>@Model.DepartureTime</dd>
+        </dl>
+        <dl>
+            <dt>Flight Duration</dt>
+            <dd>@Model.FlightDurationMinutes</dd>
+        </dl>
+        <dl>
+            <dt>Price</dt>
+            <dd>@Model.Price</dd>
+        </dl>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("FlightDeleteOption").style.display = "none";
+    }, 3000);
+</script>

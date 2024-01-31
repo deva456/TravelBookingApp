@@ -1,0 +1,97 @@
+@{
+  ViewData["Title"] = "Home page";
+}
+
+@if (TempData["loginFailed"] != null)
+{
+  <div id="loginflash" class="flash alert alert-success">
+    @TempData["loginFailed"]
+  </div>
+}
+
+<div class="text-center">
+  <div style="margin:80">
+    <h1 class="display-1"><b>Start your trip from <span style="color:Red">Z</span><span
+          style="color:Orange">G</span><span style="color:blue">Z</span></b></h1>
+  </div>
+
+  <div id="demo" style="margin:80px 5px 40px 5px; padding:20px" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active ">
+        <div class="d-flex flex-wrap justify-content-between">
+          <div class="homeCard card flex-fill">
+            <div class="cardImage" style=" background-image:url('Images/greatwall.jpg')">
+            </div>
+            <div class="card-body">
+              <h4 class="card-title">Explore China</h4>
+              <p class="card-text">China is a beautiful country</p>
+              <a href="../Flight" class="btn btn-primary">Check flights</a>
+            </div>
+          </div>
+
+          <div class="homeCard card flex-fill">
+            <div class="cardImage" style="background-image:url('Images/sakura.jpg')"></div>
+            <div class="card-body">
+              <h4 class="card-title">Explore Japan</h4>
+              <p class="card-text">Japan is a beautiful country</p>
+              <a href="../Flight" class="btn btn-primary">Check flights</a>
+            </div>
+          </div>
+
+          <div class="homeCard card flex-fill">
+            <div class="cardImage" style="background-image:url('Images/Thailand.jpg')"></div>
+            <div class="card-body">
+              <h4 class="card-title">Explore Thailand</h4>
+              <p class="card-text">Thailand is a beautiful country</p>
+              <a href="../Flight" class="btn btn-primary">Check flights</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <div class="d-flex flex-wrap justify-content-between">
+          <div class="homeCard card flex-fill">
+            <div class="cardImage" style="background-image:url('Images/America.jfif')"></div>
+            <div class="card-body">
+              <h4 class="card-title">Explore America</h4>
+              <p class="card-text">America is a beautiful country</p>
+              <a href="../Flight" class="btn btn-primary">Check flights</a>
+            </div>
+          </div>
+
+          <div class=" homeCard card flex-fill">
+            <div class="cardImage" style="background-image:url('Images/mexico.jfif')"></div>
+            <div class="card-body">
+              <h4 class="card-title">Explore Mexico</h4>
+              <p class="card-text">Mexico is a beautiful country</p>
+              <a href="../Flight" class="btn btn-primary">Check flights</a>
+            </div>
+          </div>
+
+          <div class="homeCard card flex-fill">
+            <div class="cardImage" style="background-image:url('Images/NewZiland.jfif')"></div>
+            <div class="card-body">
+              <h4 class="card-title">Explore New Zealand</h4>
+              <p class="card-text">New Zealand is a beautiful country</p>
+              <a href="../Flight" class="btn btn-primary">Check flights</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+      <span class="carousel-control-next-icon"></span>
+    </button>
+  </div>
+</div>
+
+<script>
+  setTimeout(function () {
+    document.getElementsByClassName("flash").style.display = "none";
+  }, 3000);
+</script>
+

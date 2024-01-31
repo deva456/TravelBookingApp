@@ -1,0 +1,48 @@
+@model Airport
+@{
+    ViewData["Title"] = "Delete an airport";
+}
+
+
+<div class="container col-8">
+    @if (TempData["AirportDeleteOption"] != null)
+    {
+        <div id="AirportDeleteOption" class="flash alert alert-warning">
+            @TempData["AirportDeleteOption"]
+        </div>
+    }
+    <div class="flash alert alert-success">
+        <p>Are you sure you want to delete airport @Model.Id ?</p>
+        <form method="post">
+            <button class="btn btn-danger" asp-controller="AdminAirport" asp-route-id="@Model.Id">Delete</button>
+            <a class="btn btn-primary" asp-controller="AdminAirport" asp-action="Index">Cancel</a>
+        </form>
+    </div>
+
+    <div>
+        <dl>
+            <dt>Id</dt>
+            <dd><img src=@Model.ImageUrl alt="airport logo" width="150" height="150" /></dd>
+        </dl>
+        <dl>
+            <dt>Id</dt>
+            <dd>@Model.Id</dd>
+        </dl>
+        <dl>
+            <dt>Code</dt>
+            <dd class="notranslate">@Model.Code</dd>
+        </dl>
+        <dl>
+            <dt>City</dt>
+            <dd>@Model.Name</dd>
+        </dl>
+        <dl>
+            <dt>Latitude</dt>
+            <dd class="notranslate">@Model.Latitude</dd>
+        </dl>
+        <dl>
+            <dt>Longitude</dt>
+            <dd class="notranslate">@Model.Longitude</dd>
+        </dl>
+    </div>
+</div>

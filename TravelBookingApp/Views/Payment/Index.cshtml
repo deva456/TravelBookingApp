@@ -1,0 +1,16 @@
+﻿@using System.Configuration
+@{
+    @* ViewBag.Title = "Payment Page"; *@
+}
+
+ @* <form asp-action="CreateCheckoutSession" asp-controller="Payment" method="post"> *@
+  @* <form action="/Payment/CreateCheckoutSession" method="post"> 
+    <input type="text" id="TextBox1" placeholder="amount" name="amount" /><br />
+    <button type="submit">Checkout</button>
+
+ </form>  *@
+@using (Html.BeginForm("CreateCheckoutSession", "Payment", FormMethod.Post))
+{
+     <input type="text" id="TextBox1" placeholder="amount" name="amount" /><br />
+    <button type="submit">Checkout</button>
+}

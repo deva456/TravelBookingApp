@@ -1,0 +1,77 @@
+@model List<Flight>
+@{
+    ViewData["Title"] = "List of Flights";
+}
+
+<div class="container">
+    <h2 class="text-center">List of Flights</h2>
+    <!-- Search Bar -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-10">
+            <form class="form-inline my-2 my-lg-0" method="post" asp-controller="AdminFlight" asp-action="Index">
+                <div class="input-group">
+                    <input type="search" name="searchWord" class="form-control rounded" placeholder="Search..." />
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <!-- Flight List -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-10">
+            <a class="btn btn-primary" style="margin-bottom: 10px;" asp-controller="AdminFlight" asp-action="Create">Add a flight</a>
+            @if (TempData["FlightOption"] != null)
+            {
+                <div id="FlightOption" class="flash alert alert-warning">
+                    @TempData["FlightOption"]
+                </div>
+            }
+            <div class="card text-black bg-light">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-2">Airline</th>
+                                <th class="col-1">Number</th>
+                                <th class="col-2">Origin</th>
+                                <th class="col-2">Destination</th>
+                                <th class="col-1">Departure</th>
+                                <th class="col-2">Duration</th>
+                                <th class="col-2">Price</th>
+                                <th class="col-2 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var flight in Model)
+                            {
+                                <tr>
+                                    <td>@flight.Airline.AirlineName</td>
+                                    <td class="notranslate">@flight.Number</td>
+                                    <td>@flight.Origin.Name </td>
+                                    <td>@flight.Destination.Name </td>
+                                    <td>@flight.DepartureTime</td>
+                                    <td>@flight.FlightDurationMinutes Mins</td>
+                                    <td>$ @flight.Price</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a class="btn btn-sm btn-info" style="margin-right:4px;"
+                                        asp-controller="AdminFlight" asp-action="Edit"
+                                        asp-route-id="@flight.Id">Edit</a>
+                                        <a type="submit" class="btn btn-sm btn-danger" asp-controller="AdminFlight"
+                                        asp-action="Delete" asp-route-id="@flight.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("FlightOption").style.display = "none";
+    }, 3000);
+</script>

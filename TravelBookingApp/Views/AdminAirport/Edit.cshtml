@@ -1,0 +1,75 @@
+@using TravelBooking.Data.ViewModels
+@model EditAirportVM
+@{
+    ViewData["Title"] = "Edit an airport";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        @if (TempData["AirportEditOption"] != null)
+        {
+            <div id="AirportEditOption" class="flash alert alert-warning">
+                @TempData["AirportEditOption"]
+            </div>
+        }
+        <h2>Edit Airport</h2>
+        <div class="row">
+            <div class="col-md-8 offset-2">
+                <form method="post" asp-controller="AdminAirport" asp-action="Edit" enctype="multipart/form-data">
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Code">Code</label>
+                        <input type="" asp-for="Code" class="form-control form-control-sm" />
+                        <span asp-validation-for="Code" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Name">City</label>
+                        <input asp-for="Name" class="form-control form-control-sm" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LatitudeValue">Latitude</label>
+                        <input asp-for="LatitudeValue" class="form-control form-control-sm" />
+                        <label asp-for="LatitudeDirection">Latitude Direction</label>
+                        <select asp-for="LatitudeDirection" class="form-control form-control-sm">
+                            <option value="N" class="notranslate">N</option>
+                            <option value="S" class="notranslate">S</option>
+                        </select>
+                        <span asp-validation-for="LatitudeValue" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LongitudeValue">Longitude</label>
+                        <input asp-for="LongitudeValue" class="form-control form-control-sm" />
+                        <label asp-for="LongitudeDirection">Longitude Direction</label>
+                        <select asp-for="LongitudeDirection" class="form-control form-control-sm">
+                            <option value="E" class="notranslate">E</option>
+                            <option value="W" class="notranslate">W</option>
+                        </select>
+                        <span asp-validation-for="LongitudeValue" class="text-danger"></span>
+
+                        <img width="50" height="50" src=@Model.ImageUrl />
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LogoImage"></label>
+                        <input type="file" asp-for="LogoImage" id="chooseImg" class="form-control form-control-sm" />
+                        <label for="chooseImg">chosse Image</label>
+                        <span asp-validation-for="LogoImage" class="text-danger"></span>
+                    </div>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary" asp-controller="AdminAirport"
+                            asp-route-id="@Model.Id">Update</button>
+                        <a class="btn btn-secondary" asp-controller="AdminAirport" asp-action="Index">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("AirportEditOption").style.display = "none";
+    }, 3000);
+</script>

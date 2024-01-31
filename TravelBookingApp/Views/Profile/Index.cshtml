@@ -1,0 +1,72 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager;
+
+@{
+    ViewData["Title"] = "Profile";
+}
+
+@if (TempData["profileflash"] != null)
+{
+    <div id="profileflash" class="flash alert alert-success">
+        @TempData["profileflash"]
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <h2 class="text-center mb-4">Profile for <span
+                style="color:deepskyblue;">@UserManager.GetUserAsync(User).Result.UserName</span></h2>
+        <div class="container card border-success" style="max-width: 35rem; height:26rem; padding-top:20px">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-8 offset-2">
+                        <div class="form-group">
+                            <label asp-for="@UserManager.GetUserAsync(User).Result.UserName"
+                                class="control-label">Username</label>
+                            <input asp-for="@UserManager.GetUserAsync(User).Result.UserName" class="form-control"
+                                readonly />
+                            <span asp-validation-for="@UserManager.GetUserAsync(User).Result.UserName"
+                                class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label asp-for="@UserManager.GetUserAsync(User).Result.Email"
+                                class="control-label">Email</label>
+                            <input asp-for="@UserManager.GetUserAsync(User).Result.Email" class="form-control"
+                                readonly />
+                            <span asp-validation-for="@UserManager.GetUserAsync(User).Result.Email"
+                                class="text-danger"></span>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label asp-for="@UserManager.GetUserAsync(User).Result.PhoneNumber"
+                                class="control-label">Phone No.</label>
+                            <input asp-for="@UserManager.GetUserAsync(User).Result.PhoneNumber" class="form-control"
+                                readonly />
+                            <span asp-validation-for="@UserManager.GetUserAsync(User).Result.PhoneNumber"
+                                class="text-danger"></span>
+                        </div>
+                        <div class="form-group d-flex justify-content-between mt-5">
+                            @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                            {
+                                <a class="btn btn-success float-right" style="width:100%;" asp-action="Edit"
+                                asp-route-id="@UserManager.GetUserAsync(User).Result.Id">Edit</a>
+                            }
+                            else if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                            {
+                                <a class="btn btn-success float-right" style="width:50%; margin-right:5px;"
+                                asp-action="Edit" asp-route-id="@UserManager.GetUserAsync(User).Result.Id">Edit</a>
+                                <a class="btn btn-secondary" style="width:50%;" asp-controller="Profile"
+                                asp-action="CustomerList">All Customers</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("profileflash").style.display = "none";
+    }, 3000);
+</script>

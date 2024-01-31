@@ -1,0 +1,37 @@
+@model Airline
+@{
+    ViewData["Title"] = "Delete an airline";
+}
+
+<div class="container">
+    @if (TempData["AirlineDeleteOption"] != null)
+    {
+        <div id="AirlineDeleteOption" class="flash alert alert-warning">
+            @TempData["AirlineDeleteOption"]
+        </div>
+    }
+    <div class="flash alert alert-success">
+        <p>Are you sure you want to delete Airline @Model.Id ?</p>
+        <form method="post">
+            <button class="btn btn-danger" asp-controller="AdminAirline" asp-route-id="@Model.Id">Delete</button>
+            <a class="btn btn-primary" asp-controller="AdminAirline" asp-action="Index">Cancel</a>
+        </form>
+    </div>
+
+    <div>
+        <dl>
+            <dt>Id</dt>
+            <dd class="notranslate">@Model.Id</dd>
+        </dl>
+        <dl>
+            <dt>Airline Name</dt>
+            <dd>@Model.AirlineName</dd>
+        </dl>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("AirlineDeleteOption").style.display = "none";
+    }, 3000);
+</script>

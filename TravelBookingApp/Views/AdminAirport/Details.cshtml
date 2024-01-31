@@ -1,0 +1,92 @@
+@model Airport
+@{
+    ViewData["Title"] = "Detail of airport";
+}
+
+<div class="row">
+    <div class="col-md-8 offset-2">
+        <h2>Airport Detail</h2>
+        <div class="container">
+            <div class="d-flex justify-content-around align-content-center">
+
+                <div>
+                    <dl>
+                        <dt>Id</dt>
+                        <dd>@Model.Id</dd>
+                    </dl>
+                    <dl>
+                        <dt>Code</dt>
+                        <dd class="notranslate">@Model.Code</dd>
+                    </dl>
+                    <dl>
+                        <dt>City</dt>
+                        <dd>@Model.Name</dd>
+                    </dl>
+                    <dl>
+                        <dt>Latitude</dt>
+                        <dd id="lat" class="notranslate">@Model.Latitude</dd>
+                    </dl>
+                    <dl>
+                        <dt>Longitude</dt>
+                        <dd id="lng" class="notranslate">@Model.Longitude</dd>
+                    </dl>
+
+                </div>
+                <div> <img width="400" height="250" src=@Model.ImageUrl />
+                    <div class="form-group text-center" style="margin-top: 0.5rem;">
+                        <a class="btn btn-primary float-right" asp-control="AdminAirport" asp-action="Edit"
+                            asp-route-id="@Model.Id">Edit</a>
+                        <a class="btn btn-secondary" asp-controller="AdminAirport" asp-action="Index">Back To List</a>
+                    </div>
+                </div>
+            </div>
+            <div id="map" style="height: 500px; width: 100%;"></div>
+                <script>
+                    function initMap() {
+                       const latEle = document.getElementById('lat');
+                       int latitudedegreePosition =latEle.innerText.IndexOf('°');
+                       string latitudeStr = latEle.Substring(0, latitudedegreePosition);
+                       int lat= Convert.ToInt32(latitudeStr);
+                       const lngEle = document.getElementById('lng');
+                       int longitudedegreePosition = lngEle.innerText.IndexOf('°');
+                       string longitudeStr = lngEle.Substring(0, longitudedegreePosition);
+                       int lng = Convert.ToInt32(longitudeStr);
+                        var location = { lat: lat, lng: lng };
+
+                        var map = new google.maps.Map(document.getElementById('map'), {
+                            zoom: 8,
+                            center: location
+                        });
+
+                        var marker = new google.maps.Marker({
+                            position: location,
+                            map: map
+                        });  
+                    }
+                </script>
+                <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCb_kdxjG-fDsyKhxs66L3XnNZwDzREMkw&callback=initMap"></script>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function initMap() {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 8,
+            center: { lat: @ViewData["Latitude"], lng: @ViewData["Longitude"] }
+        });
+
+        var marker = new google.maps.Marker({
+            position: { lat: @ViewData["Latitude"], lng: @ViewData["Longitude"] },
+            map: map
+        });
+    }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=@ViewData["APIKey"]&callback=initMap">
+</script>
+
+
+

@@ -1,0 +1,216 @@
+﻿@model IEnumerable<TravelBooking.Models.Flight>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@if (TempData["AddToCart"] != null)
+{
+    <div id="AddToCart" class="flash alert alert-success">
+        @TempData["AddToCart"]
+    </div>
+}
+
+<div class="container">
+    <div class="col-12 form-inline">
+        <!-- Search Flight Bar -->
+        <div class="card text-white bg-dark">
+            <div class="card-body">
+                <form asp-action="Index" asp-controller="Flight" method="post"
+                    class="d-flex align-items-center justify-content-between">
+                    Origin:
+                    @if (ViewBag.origin != null)
+                    {
+                        <input name="Origin" type="text" class="form-control rounded"
+                            style="margin-left:5px; margin-right:10px;" value="@ViewBag.Origin">
+                    }
+                    else
+                    {
+                        <input name="Origin" type="text" class="form-control rounded"
+                            style="margin-left:5px; margin-right:10px;">
+                    }
+
+                    Destination:
+                    @if (ViewBag.destination != null)
+                    {
+                        <input name="Destination" type="text" class="form-control rounded"
+                            style="margin-left:5px; margin-right:10px;" value="@ViewBag.destination">
+                    }
+                    else
+                    {
+                        <input name="Destination" type="text" class="form-control rounded"
+                            style="margin-left:5px; margin-right:10px;">
+                    }
+                    DepartureDate:
+                    @if (ViewBag.departureDate != null)
+                    {
+                        <input name="DepartureDate" type="date" class="form-control rounded"
+                            style="margin-left:5px; margin-right:10px;"
+                            value="@ViewBag.departureDate.ToString("yyyy-MM-dd")">
+                    }
+                    else
+                    {
+                        <input name="DepartureDate" type="date" class="form-control rounded"
+                            style="margin-left:5px; margin-right:10px;" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                    }
+                    <button type="submit" class="btn btn-primary"
+                        style="margin-left:5px; margin-right:10px;">Search</button>
+                </form>
+            </div>
+        </div>
+        @if (TempData["FlightSearchMsg"] != null)
+        {
+            <br>
+            <div id="FlightSearchMsg" class="flash alert alert-danger">
+                @TempData["FlightSearchMsg"]
+            </div>
+        }
+        <!-- Images -->
+        <div id="searchflight" style="margin:0px 5px 10px 5px; padding:20px" class="carousel slide"
+            data-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="d-flex flex-wrap justify-content-between">
+                        <div class="homeCard card flex-fill">
+                            <div class="cardImage" style="background-image:url('Images/America.jfif')"></div>
+                            <div class="card-body">
+                                <h4 class="card-title">Explore America</h4>
+                                <p class="card-text">America is beautiful country</p>
+                            </div>
+                        </div>
+
+                        <div class=" homeCard card flex-fill">
+                            <div class="cardImage" style="background-image:url('Images/mexico.jfif')"></div>
+                            <div class="card-body">
+                                <h4 class="card-title">Explore Mexico</h4>
+                                <p class="card-text">Mexico is beautiful country</p>
+                            </div>
+                        </div>
+
+                        <div class="homeCard card flex-fill">
+                            <div class="cardImage" style="background-image:url('Images/NewZiland.jfif')"></div>
+                            <div class="card-body">
+                                <h4 class="card-title">Explore NewZealand</h4>
+                                <p class="card-text">NewZealand is beautiful country</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card text-white bg-dark" style="margin-bottom: 50px;">
+            <div class="card-body">
+                <!-- Flight info -->
+                <table class="table table-dark table-hover">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Number)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Airline)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Origin)
+                                (@Html.DisplayNameFor(model => model.Origin.Code))
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Destination)
+                                (@Html.DisplayNameFor(model => model.Origin.Code))
+                            </th>
+                            <th>
+                                Departure Date
+                            </th>
+                            <th>
+                                Departure Time
+                            </th>
+                            <th>
+                                Duration
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Price)
+                            </th>
+                            @if (!User.IsInRole("Admin"))
+                            {
+                                <th>
+                                    Buy
+                                </th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody id="myTable">
+                        @if (Model != null)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="notranslate">
+                                        @Html.DisplayFor(modelItem => item.Number)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Airline.AirlineName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Origin.Name)
+                                        <span class="notranslate">(@Html.DisplayFor(modelItem => item.Origin.Code))</span>
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Destination.Name)
+                                        <span class="notranslate">(@Html.DisplayFor(modelItem => item.Destination.Code))</span>
+                                    </td>
+                                    <td>
+                                        @if (ViewBag.departureDate != null)
+                                        {
+                                            @(((DateTime)ViewBag.departureDate).ToString("yyyy-MM-dd"))
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DepartureTime)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.FlightDurationMinutes) Mins
+                                    </td>
+                                    <td>
+                                        $ @Html.DisplayFor(modelItem => item.Price)
+                                    </td>
+                                    @if (User.IsInRole("User"))
+                                    {
+                                        <td>
+                                            @using (Html.BeginForm("AddToCart", "Flight", FormMethod.Post))
+                                            {
+                                                <input type="text" value="@item.Id" name="Id" hidden />
+                                                @if (ViewBag.departureDate != null)
+                                                {
+                                                    <input name="departureDate" type="date"
+                                                        value="@ViewBag.departureDate.ToString("yyyy-MM-dd")" hidden>
+                                                }
+                                                else
+                                                {
+                                                    <input name="departureDate" type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")"
+                                                        hidden>
+                                                }
+                                                <button type="submit" class="btn btn-sm btn-primary">Add to Cart</button>
+                                            }
+                                        </td>
+                                    }
+                                    else if (!User.IsInRole("User") && !User.IsInRole("Admin"))
+                                    {
+                                        <td>
+                                            <a class="btn btn-sm btn-primary" asp-controller="Account" asp-action="Login">Add to Cart</a>
+                                        </td>
+                                    }
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("AddToCart").style.display = "none";
+    }, 3000);
+</script>

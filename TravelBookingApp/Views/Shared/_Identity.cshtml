@@ -1,0 +1,73 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<IdentityUser> UserManager
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-outline-warning my-2 my-sm-0" asp-controller="Flight" asp-action="Index">
+        <i class="bi bi-box-arrow-in-right"></i> Start
+    </a>
+    <span style="padding: 5px;"></span>
+    <a class="btn btn-outline-success my-2 my-sm-0" asp-controller="Account" asp-action="Login">
+        <i class="bi bi-box-arrow-in-right"></i> Log in
+    </a>
+    <span style="padding: 5px;"></span>
+
+    <a class="btn btn-outline-primary my-2 my-sm-0" asp-controller="Account" asp-action="Register">
+        <i class="bi bi-person-plus"></i> Register
+    </a>
+
+
+}
+else
+{
+    @*User profile section*@
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="nav-link notranslate" style="color:deepskyblue;" asp-controller="Profile"
+                asp-action="Index">@UserManager.GetUserAsync(User).Result.UserName</a>
+            </li>
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Profile" asp-action="CustomerList">Customers</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="PurchasedFlight" asp-action="AdminIndex">Purchases</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="AdminAirline" asp-action="Index">Airline</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="AdminAirport" asp-action="Index">Airport</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="AdminFlight" asp-action="Index">Flight</a>
+                </li>
+            }
+            else
+            {
+                @if (ViewBag.count == null)
+                {
+                    ViewBag.count = 0;
+                }
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="Cart" asp-action="Index">Cart(@ViewBag.count)</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-controller="PurchasedFlight" asp-action="Index"
+                asp-route-id="@UserManager.GetUserAsync(User).Result.Id">History</a>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <span style="padding: 5px;"></span>
+    <div class="navbar-brand">
+        <form asp-controller="Account" asp-action="Logout">
+            <button class="btn btn-outline-danger my-2 my-sm-0">
+                <i class="bi bi-box-arrow-in-right"></i> Log out
+            </button>
+        </form>
+    </div>
+}

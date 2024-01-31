@@ -1,0 +1,72 @@
+@model List<Airline>
+@{
+    ViewData["Title"] = "List of Airlines";
+}
+
+<div class="container">
+    <h2 class="text-center">List of Airlines</h2>
+    <br>
+    <!-- Search Bar -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-8">
+            <form class="form-inline my-2 my-lg-0" method="post">
+                <div class="input-group">
+                    <input type="search" name="searchWord" class="form-control rounded" placeholder="Search..." />
+                    <button type="submit" class="btn btn-outline-primary">Search</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <br>
+    <!-- Airline List -->
+    <div class="container d-flex justify-content-center">
+        <div class="col-8">
+            <a class="btn btn-primary" style="margin-bottom: 10px;" asp-controller="AdminAirline"
+                asp-action="Create">Add an airline</a>
+            @if (TempData["AirlineOption"] != null)
+            {
+                <div id="AirlineOption" class="flash alert alert-warning">
+                    @TempData["AirlineOption"]
+                </div>
+            }
+            <div class="card text-black bg-light">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="col-4">Id</th>
+                                <th class="col-4">Airline Name</th>
+                                <th class="col-4 text-center">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var airline in Model)
+                            {
+                                <tr>
+                                    <td class="notranslate">@airline.Id</td>
+                                    <td>@airline.AirlineName</td>
+                                    <td class="d-flex justify-content-center">
+                                        <a class="btn btn-sm btn-info" style="margin-right:4px;"
+                                        asp-controller="AdminAirline" asp-action="Edit"
+                                        asp-route-id="@airline.Id">Edit</a>
+                                        <a type="submit" class="btn btn-sm btn-danger" asp-controller="AdminAirline"
+                                        asp-action="Delete" asp-route-id="@airline.Id">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(function () {
+        document.getElementById("AirlineOption").style.display = "none";
+    }, 3000);
+
+</script>
+
+
